@@ -16,3 +16,12 @@ h1 {
 	margin-bottom: 30px;
 }
 
+form {
+	border: 1px solid #ccc;
+    margin: 20px;
+    padding: 10px;
+}
+
+.submit-btn-container {
+	text-align: center;
+}
