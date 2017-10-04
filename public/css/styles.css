@@ -25,3 +25,23 @@ form {
 .submit-btn-container {
 	text-align: center;
 }
+
+#result-wrapper {
+	padding: 0 150px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.result-container {
+	border: 1px solid #eee;
+}
+
+span {
+	font-weight: bold;
+}
+
+.result-value {
+	color: green;
+    font-weight: bold;
+    font-size: 30px;
+}
