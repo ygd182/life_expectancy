@@ -1,3 +1,5 @@
+//result.js
+
 (function() {
 	
 
@@ -7,12 +9,11 @@
 	function bindEvents() {
 
 
-		$(document).on('click', '#submit-btn', function(e) {
+		/*$(document).on('click', '#submit-btn', function(e) {
 			e.preventDefault();
-			//getExerciseData();
-			window.location.href = 'result.html';
 			
-		});
+			
+		});*/
 
 	}
 
@@ -51,9 +52,8 @@
 			template.result = temp1;
 			/*template.navbar = temp2[0];
 			template.modal = temp3[0];*/
-			//getExerciseData();
+			getExerciseData();
 		});
 	}
 
 })();
-
