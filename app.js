@@ -81,13 +81,20 @@ app.get('/calculate', function (req, res) {
     columns = mapColumns(result);
     res.send(columns);
   }); */
-  var query = "SELECT "+ req.query.age +" FROM "+ req.query.gender +"_life_expectancy_by_zip_code WHERE zip="+ req.query.zipCode+ '.0';
-  console.log(query);
-  connection.query(query , function (err, result, fields) {
-    if (err) throw err;
-    console.log(result[0][req.query.age]);
-    res.json(result[0][req.query.age]);
+  try {
+    var query = "SELECT "+ req.query.age +" FROM "+ req.query.gender +"_life_expectancy_by_zip_code WHERE zip="+ req.query.zipCode+ '.0';
+    console.log(query);
+    connection.query(query , function (err, result, fields) {
+    if (err) res.json('error');
+    if(result.length >0)
+      res.json(result[0][req.query.age]);
+    res.json('error');
   }); 
+
+  } catch(err) {
+    res.json('error');
+  }
+  
   //res.send('error');
 });
 
