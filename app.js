@@ -66,21 +66,10 @@ function startServer() {
   });
 
 }
-function mapColumns(columns) {
-  columns.splice(0,1);
-  var result = columns.map((value) => value.Field);
-  console.log(result);
-  return result;
-}
+
 
 app.get('/calculate', function (req, res) {
   console.log(req.query);
-  var columns = [];
-  /*connection.query("SHOW COLUMNS FROM "+ req.query.gender +"_life_expectancy_by_zip_code", function (err, result, fields) {
-    if (err) throw err;
-    columns = mapColumns(result);
-    res.send(columns);
-  }); */
   try {
     var query = "SELECT "+ req.query.age +" FROM "+ req.query.gender +"_life_expectancy_by_zip_code WHERE zip="+ req.query.zipCode+ '.0';
     console.log(query);
@@ -88,7 +77,8 @@ app.get('/calculate', function (req, res) {
     if (err) res.json('error');
     if(result.length >0)
       res.json(result[0][req.query.age]);
-    res.json('error');
+    else
+      res.json('error');
   }); 
 
   } catch(err) {
@@ -97,6 +87,56 @@ app.get('/calculate', function (req, res) {
   
   //res.send('error');
 });
+
+function mapColumns(columns) {
+  columns.splice(0,1);
+  var result = columns.map((value) => value.Field);
+  console.log(result);
+  return result;
+}
+
+app.get('/age', function (req, res) {
+  console.log(req.query);
+  var columns = [];
+  connection.query("SHOW COLUMNS FROM "+ req.query.gender +"_life_expectancy_by_zip_code", function (err, result, fields) {
+    if (err) res.json('error');
+    columns = mapColumns(result);
+    res.send(columns);
+  }); 
+  
+  //res.send('error');
+});
+
+
+function mapZip(zips) {
+  var result = zips.map((value) => value.zip);
+  console.log(result);
+  return result;
+}
+
+app.get('/zipcode', function (req, res) {
+  console.log(req.query);
+
+  try {
+    var query = "SELECT zip FROM "+ req.query.gender +"_life_expectancy_by_zip_code";
+    console.log(query);
+    connection.query(query , function (err, result, fields) {
+    if (err) res.json('error');
+
+
+    res.json(mapZip(result));
+
+  }); 
+
+  } catch(err) {
+    res.json('error');
+  }
+  
+  //res.send('error');
+});
+
+
+
 
 // catch 404 and forward to error handler
 
