@@ -4,6 +4,8 @@
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/bootstrap-validator/dist/validator.min.js"></script>
   <script src="bower_components/mustache.js/mustache.min.js"></script>
   <script type="text/javascript" src="js/common.js"></script>
   <script type="text/javascript" src="js/admin.js"></script>
@@ -16,38 +18,63 @@
 	    </div>
 	  </div>
 	</nav>
-	<h2>Get your estimate now.</h2>
-	<form class="form-horizontal" role="form">
+	<h1>Get your estimate now.</h1>
+	<form class="form-horizontal" data-toggle="validator" role="form">
 	<legend class="col-form-legend col-sm-12">Fill up your information</legend>
 	  <div class="form-group">
 	    <label for="inputAge" class="col-sm-1 control-label">Age</label>
 	    <div class="col-sm-10">
-	      <input type="number" class="form-control" id="inputAge" placeholder="Age" min="0">
+            <select id="inputAge" class="form-control">
+              <option value="Column_0_1" selected>0_1</option>
+              <option value="Column_1_4" >1_4</option>
+              <option value="Column_05_9" >5_9</option>
+              <option value="Column_10_14" >10_14</option>
+              <option value="Column_15_19" >15_19</option>
+              <option value="Column_20_24" >20_24</option>
+              <option value="Column_25_29" >25_29</option>
+              <option value="Column_35_39" >30_34</option>
+              <option value="Column_40_44" >40_44</option>
+              <option value="Column_45_49" >45_49</option>
+              <option value="Column_50_54" >50_54</option>
+              <option value="Column_55_59" >55_59</option>
+              <option value="Column_60_64" >60_64</option>
+              <option value="Column_65_69" >65_69</option>
+              <option value="Column_70_74" >70_74</option>
+              <option value="Column_75_79" >75_79</option>
+              <option value="Column_80_84" >80_84</option>
+              <option value="Column_85" >85</option>
+            </select>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="inputZip" class="col-sm-1 control-label">Zip code</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="inputZip" placeholder="Zip code">
+	      <input type="text" class="form-control" id="inputZip" placeholder="Zip code" required data-required-error="This field is required.">
+	      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          <div class="help-block with-errors"></div>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="inputWeight" class="col-sm-1 control-label">Weight</label>
 	    <div class="col-sm-10">
-	      <input type="number" class="form-control" id="inputWeight" placeholder="Weight" min="0">
+	      <input type="number" class="form-control" id="inputWeight" placeholder="Weight" min="0" required data-required-error="This field is required.">
+	      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          <div class="help-block with-errors"></div>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="inputHeight" class="col-sm-1 control-label">Height</label>
 	    <div class="col-sm-10">
-	      <input type="number" class="form-control" id="inputHeight" placeholder="Height" min="0">
+	      <input type="number" class="form-control" id="inputHeight" placeholder="Height" min="0" required data-required-error="This field is required.">
+	      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          <div class="help-block with-errors"></div>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	  <label class="col-sm-1 control-label">Gender</label>
 	  <div class="col-sm-10">
-		  <label class="radio-inline"><input type="radio" name="optradio">Male</label>
-		  <label class="radio-inline"><input type="radio" name="optradio">Female</label>
+		  <label class="radio-inline"><input type="radio" name="optradio" value="male" checked="checked">Male</label>
+		  <label class="radio-inline"><input type="radio" name="optradio" value="female">Female</label>
 		   </div>
 	  </div>
 	    <div class="row">

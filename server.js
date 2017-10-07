@@ -1,20 +1,27 @@
-/*var express = require('express');  
-var app = express();  
-var server = require('http').Server(app);  
-var port = process.env.PORT || 8080; 
-
-app.use(express.static('public'));
-
-server.listen(port, function() {  
-    console.log('Server running on http://localhost:' + port);
-});*/
-
-
-
-//var config = require('config');
-//var db = require('mongoose');
 var app = require('./app');
 
+
+
+var connection = mysql.createConnection({
+  host     : 'sql9.freemysqlhosting.net',
+  user     : app.get('db_user'),
+  password : app.get('db_pass'),
+  database : 'sql9197789'
+});
+
+connection.connect(function(err){
+if(!err) {
+    console.log("Database is connected ... nn");
+    connection.query("SELECT * FROM female_life_expectancy_by_zip_code", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });    
+} else {
+    console.log("Error connecting database ... nn");    
+}
+});
+
+exports.connection = connection;
 
 // Mongo connection setup
 

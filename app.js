@@ -9,6 +9,7 @@ var dotenv = require('dotenv');
 dotenv.load();
 
 var config = require('config');
+var mysql = require('mysql');
 
 
 //var exercise = require('./routes/ExerciseRoute');
@@ -23,8 +24,8 @@ var app = express();
 var httpPort = config.get('port');
 app.set('port', process.env.PORT || httpPort);
 
-/*app.set('db_user', process.env.db_user);
-app.set('db_pass', process.env.db_pass);*/
+app.set('db_user', process.env.db_user);
+app.set('db_pass', process.env.db_pass);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -34,15 +35,69 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('/exercise', exercise);
+
+
+// =============================================================================
+// DB CONFIGURATION
+// =============================================================================
+
+
+var connection = mysql.createConnection({
+  host     : 'sql9.freemysqlhosting.net',
+  user     : app.get('db_user'),
+  password : app.get('db_pass'),
+  database : 'sql9197789'
+});
+
+connection.connect(function(err){
+  if(!err) {
+      console.log("Database is connected ... nn");  
+      startServer(); 
+  } else {
+      console.log("Error connecting database ... nn");    
+  }
+});
+
+
+function startServer() {
+  // Start Express
+  var server = app.listen(app.get('port'), function() {
+      console.log('Express server listening on port ' + server.address().port);
+  });
+
+}
+function mapColumns(columns) {
+  columns.splice(0,1);
+  var result = columns.map((value) => value.Field);
+  console.log(result);
+  return result;
+}
+
+app.get('/calculate', function (req, res) {
+  console.log(req.query);
+  var columns = [];
+  /*connection.query("SHOW COLUMNS FROM "+ req.query.gender +"_life_expectancy_by_zip_code", function (err, result, fields) {
+    if (err) throw err;
+    columns = mapColumns(result);
+    res.send(columns);
+  }); */
+  var query = "SELECT "+ req.query.age +" FROM "+ req.query.gender +"_life_expectancy_by_zip_code WHERE zip="+ req.query.zipCode+ '.0';
+  console.log(query);
+  connection.query(query , function (err, result, fields) {
+    if (err) throw err;
+    console.log(result[0][req.query.age]);
+    res.json(result[0][req.query.age]);
+  }); 
+  //res.send('error');
+});
 
 // catch 404 and forward to error handler
-/*
+
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
-});*/
+});
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -55,22 +110,4 @@ app.use(function(err, req, res, next) {
   res.json({error: err});
 });
 
-// =============================================================================
-// DB CONFIGURATION
-// =============================================================================
-/*
-var dbUrl = 'mongodb://' + app.get('db_user') + ':' + app.get('db_pass') + config.mongodb.instances[0].host + ':' + config.mongodb.instances[0].port + '/' + config.mongodb.db;
-app.set('dbUrl', dbUrl);
-app.use(function (req, res, next) {
-
-    //readyState = 1 means that connection was established
-    if (mongoose.connection.readyState !== 1) {
-        console.log('error');
-        return next(new Error('Database connection is not established. Mongoose readyState: ' + mongoose.connection.readyState));
-    }
-
-    next();
-});
-
-*/
 module.exports = app;

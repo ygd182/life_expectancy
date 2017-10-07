@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "postinstall": "bower install",
-    "start": "node ./server.js",
+    "start": "node ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "ISC",
@@ -17,9 +17,8 @@
     "debug": "~2.6.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
-    "mongoose": "^4.11.8",
-    "mongoose-double": "0.0.1",
     "morgan": "~1.8.1",
+    "mysql": "^2.14.1",
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {

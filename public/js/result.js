@@ -30,7 +30,7 @@
 		$('#navbar-container').html(Mustache.render(template.navbar, navbarModel));*/
 
 		
-		var viewModel = { result: 96};
+		var viewModel = { result: data};
  		$('#result-wrapper').html(Mustache.render(template.result, viewModel));
  		/*
  		
@@ -40,11 +40,25 @@
 		modalView.render();*/
 	}
 
-	function getExerciseData() {
+	function getResult(query) {
+		return $.ajax({
+		  method: "GET",
+		  url: "calculate" + query,
+		});
+	}
+
+	function getResultData() {
 
 		//exerciseService.getExercise(exerciseId).then(render, onError);
-	
-		render({});
+		var userInfo = JSON.parse(localStorage.getItem('userinfo'));
+		console.log(userInfo);
+		var queryString =   '?age='+userInfo.age +
+							'&zipCode='+userInfo.zipCode +
+							'&gender='+userInfo.gender +
+							'&height='+userInfo.height +
+							'&weight='+userInfo.weight;
+		console.log(queryString);
+		getResult(queryString).then(render, common.onError);
 	}
 
 	function loadTemplates() {
@@ -52,7 +66,7 @@
 			template.result = temp1;
 			/*template.navbar = temp2[0];
 			template.modal = temp3[0];*/
-			getExerciseData();
+			getResultData();
 		});
 	}
 
