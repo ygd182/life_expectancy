@@ -11,10 +11,12 @@
 		weight:0
 	};
 
-	function getZipCodes(userInfo) {
+	var zipCodes = [];
+
+	function getZipCodes(gender) {
 		return $.ajax({
 		  type: "GET",
-		  url: "/zipcode?gender="+ userInfo.gender,
+		  url: "/zipcode?gender="+ gender,
 		});
 	}
 
@@ -34,15 +36,31 @@
 		return userInfo;
 	}
 
+	function isValidZipcode(zip) {
+		return zipCodes.some(function(id) {
+			return id == zip;
+		})
+	}
+
 	function bindEvents() {
 
 		$(document).on('click', '#submit-btn', function(e) {
 			e.preventDefault();
 			var userInfo = getData();
 			if(!$(e.target).hasClass('disabled')) {
-				
-				localStorage.setItem('userinfo', JSON.stringify(userInfo));
-				window.location.href = 'result.html';
+
+				getZipCodes(userInfo.gender).then(function(data){
+					zipCodes = data;
+
+					if(isValidZipcode(userInfo.zipCode)){
+					localStorage.setItem('userinfo', JSON.stringify(userInfo));
+					window.location.href = 'result.html';
+					}else {
+						alert('The zip code is invalid');
+					}
+
+				}, common.onError);
+					
 			
 			}
 			
