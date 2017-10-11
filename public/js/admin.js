@@ -48,6 +48,19 @@
 			
 		});
 
+
+		$('#inputHeight').slider({
+			formatter: function(value) {
+				return 'Current value: ' + value;
+			}
+		});
+
+		$('#inputWeight').slider({
+			formatter: function(value) {
+				return 'Current value: ' + value;
+			}
+		});
+
 	}
 
 	$(document).ready(function ready(){

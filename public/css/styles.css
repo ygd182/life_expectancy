@@ -44,3 +44,8 @@ span {
     font-weight: bold;
     font-size: 30px;
 }
+
+
+.slider.slider-horizontal {
+    width: 100% !important;
+}

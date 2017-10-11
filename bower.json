@@ -17,6 +17,7 @@
     "mustache.js": "mustache#^2.3.0",
     "jquery.countdown": "^2.2.0",
     "bootstrap-validator": "^0.11.9",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "seiyria-bootstrap-slider": "^9.9.0"
   }
 }
