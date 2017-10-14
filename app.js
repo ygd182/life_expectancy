@@ -46,7 +46,7 @@ var connection = mysql.createConnection({
   host     : 'sql9.freemysqlhosting.net',
   user     : app.get('db_user'),
   password : app.get('db_pass'),
-  database : 'sql9197789'
+  database : 'sql9199405'
 });
 
 connection.connect(function(err){
